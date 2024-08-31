@@ -10,9 +10,11 @@ csrf = CSRFProtect()
 login_manager = LoginManager()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = 'VERY_SECRET_KEY'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['CSRF_COOKIE_SAMESITE'] = 'Lax'  # Set SameSite attribute for CSRF
+app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF protection
+app.config['SESSION_COOKIE_HTTPONLY'] = False
 
 # Initialize extensions with the app
 db.init_app(app)

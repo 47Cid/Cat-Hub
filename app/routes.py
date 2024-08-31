@@ -99,6 +99,9 @@ def admin():
 
     form = SettingsForm()
     
+    # Fetch all users for the admin page
+    users = User.query.all()
+    
     # Fetch the current settings or create a new one if none exist
     settings = AppSettings.query.first()
     if not settings:
@@ -115,9 +118,10 @@ def admin():
     
     # Set the form's initial data to the current greeting message
     form.greeting_message.data = settings.greeting_message
-    return render_template('admin.html', form=form, user=current_user)
+    return render_template('admin.html', form=form, user=current_user, users=users)
 
 @app.route("/dev")
+@login_required
 def dev():
     settings = AppSettings.query.first() 
     greetings = settings.greeting_message
@@ -137,8 +141,25 @@ def dev():
     rendered_html = html_content.format(greetings=greetings)
     return render_template_string(rendered_html)
 
+@app.route("/delete_user/<int:user_id>", methods=['POST'])
+@login_required
+def delete_user(user_id):
+    if not current_user.is_admin:  # Only allow admins to delete users
+        flash('You do not have permission to delete users.', 'danger')
+        return redirect(url_for('home'))
+    
+    user = User.query.get_or_404(user_id)  # Fetch the user by ID
+    if user == current_user:
+        flash('You cannot delete your own account.', 'danger')
+        return redirect(url_for('admin'))
+    
+    db.session.delete(user)  # Delete the user from the database
+    db.session.commit()
+    flash(f'User {user.username} has been deleted.', 'success')
+    return redirect(url_for('admin'))
 
 @app.route('/files')
+@login_required
 def serve_file():
     filename = request.args.get('filename')
     if not filename:
