@@ -1,9 +1,14 @@
-### Vulnerabilities Present
+## Vulnerabilities Present
+### Server-Side
 1) CSRF 
 2) Directory Traversal
 3) SSTI
-4) XSS and Dangling Markup Injection
-5) SSRF
+4) SSRF
+
+### Client-Side Injection
+1) Basic XSS
+2) Dangling Markup Injection
+
 
 ### Setps to Run
 ```bash
