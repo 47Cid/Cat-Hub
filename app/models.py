@@ -1,6 +1,8 @@
 from app import db
 from datetime import datetime
 from flask_login import UserMixin
+import binascii
+import os
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -10,6 +12,8 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     comments = db.relationship('Comment', backref='author', lazy=True)
     is_admin = db.Column(db.Boolean, default=False)
+    api_key = db.Column(db.String(64), unique=True, nullable=False, default=lambda: binascii.hexlify(os.urandom(32)).decode('utf-8'))
+
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"

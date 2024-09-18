@@ -26,6 +26,7 @@ def create_admin():
         db.session.commit()
         
         print("Admin user created successfully.")
+        print(f"Admin API Key: {admin.api_key}")
 
 
 create_admin()

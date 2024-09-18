@@ -88,7 +88,9 @@ def comments():
         db.session.commit()
         flash('Your comment has been posted!', 'success')
         return redirect(url_for('comments'))
-    return render_template('comments.html', title='Add Comment', form=form, comments=comments)
+    
+    api_key = current_user.api_key
+    return render_template('comments.html', title='El Gato', form=form, comments=comments, api_key=api_key)
 
 @app.route("/admin", methods=['GET', 'POST'])
 @login_required

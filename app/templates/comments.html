@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Comments{% endblock %}
+{% block title %}Cats{% endblock %}
 
 {% block content %}
+<div class="text-center">
+    <img src="/static/gato.webp" alt="Cute Cat" class="img-fluid">
+</div>
     <h1>{{ title }}</h1>
 
     <!-- Display All Comments -->
@@ -21,8 +24,7 @@
     {% endif %}
 
     <!-- Comment Form -->
-    <h2>Post a Comment</h2>
-    <div> Secret API Key: test123 </div>
+    <div> Your Secret API Key: {{api_key}} </div>
     <form action="{{ url_for('comments') }}" method="post">
         {{ form.hidden_tag() }} <!-- CSRF token included here -->
         <div class="form-group">

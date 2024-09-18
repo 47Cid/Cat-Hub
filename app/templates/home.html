@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <div class="text-center">
-        <h1>Welcome to the Flask App!</h1>
+        <h1>Welcome to the Cat Hub!</h1>
         {% if user.is_authenticated %}
             <h2>{{ greetings | safe | e}}, {{ user.username }}!</h2>
         {% else %}
